@@ -9,13 +9,17 @@ import org.springframework.stereotype.Component;
 @Component
 
 public class LibraryService {
+    @Autowired
     private BookService bookService;
-    private BookRepository bookRepository;
 
     @Autowired
-    public LibraryService(BookService bookService, BookRepository bookRepository) {
-        this.bookService = bookService;
-        this.bookRepository = bookRepository;
+    private BookRepository bookRepository;
+
+    public LibraryService() {
         System.out.println("LibraryService object created");
+    }
+
+    public BookService getBookService() {
+        return bookService;
     }
 }
