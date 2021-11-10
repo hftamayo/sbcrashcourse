@@ -1,4 +1,4 @@
-package com.htamayo.sbcrashcourse;
+package com.htamayo.sbcrashcourse.fsteps;
 
 /*
 ejemplo de inyeccion de clases: clase 2

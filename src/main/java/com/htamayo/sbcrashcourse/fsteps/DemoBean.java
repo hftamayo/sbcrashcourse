@@ -1,4 +1,4 @@
-package com.htamayo.sbcrashcourse;
+package com.htamayo.sbcrashcourse.fsteps;
 /*
 ejemplo de un bean dentro del contexto spring
  */
