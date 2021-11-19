@@ -1,8 +1,14 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
-public class LoanRequest {
+@Entity
+public final class LoanRequest {
+
+    @Id
+    private long id;
     private final int amount;
     private final User borrower;
     private final Duration repaymentTerm;
