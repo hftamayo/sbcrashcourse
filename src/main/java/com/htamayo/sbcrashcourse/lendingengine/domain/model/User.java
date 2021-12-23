@@ -1,10 +1,12 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
+@Table(name="user")
 public final class User {
 
     @Id
