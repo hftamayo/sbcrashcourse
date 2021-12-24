@@ -35,6 +35,6 @@ public class LoanController {
 
     @GetMapping(value="/users")
     public List<User> findUsers(){
-        return userRepository.findAll();
+        return (List<User>) userRepository.findAll();
     }
 }
