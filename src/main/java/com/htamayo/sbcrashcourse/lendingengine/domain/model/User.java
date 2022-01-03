@@ -1,5 +1,6 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
@@ -8,12 +9,16 @@ import java.util.Objects;
 @Entity
 @Table(name="user")
 public final class User {
-
     @Id
+    @Column(name="id")
     private long id;
+    @Column(name="firstname")
     private String firstName;
+    @Column(name="lastname")
     private String lastName;
+    @Column(name="age")
     private int age;
+    @Column(name="occupation")
     private String occupation;
 
     public User() {
