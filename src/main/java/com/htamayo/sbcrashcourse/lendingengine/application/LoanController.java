@@ -28,14 +28,14 @@ public class LoanController {
         this.loanApplicationAdapter = loanApplicationAdapter;
     }
 
-    @PostMapping(value = "/loan/request")
+    @PostMapping(value = "/loan/request", consumes={"application/json"})
     public void RequestLoan(@RequestBody final LoanRequest loanRequest){
         loanApplicationRepository.save(loanApplicationAdapter.transform(loanRequest));
     }
 
     @GetMapping(value = "/loan/requests")
     public List<LoanApplication> findAllLoanApplications(){
-        return loanApplicationRepository.findAll();
+        return (List<LoanApplication>)loanApplicationRepository.findAll();
 
     }
 

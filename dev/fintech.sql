@@ -33,9 +33,9 @@ DROP TABLE IF EXISTS `loansapplication`;
 CREATE TABLE `loansapplication` (
   `id` int NOT NULL,
   `amount` int NOT NULL,
-  `repaymentindats` int NOT NULL,
+  `repaymentindays` int NOT NULL,
   `interestrate` double NOT NULL,
-  `userid` int NOT NULL
+  `borrower_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

@@ -11,14 +11,14 @@ public final class LoanApplication {
     @Id
     @Column(name="id")
     private long id;
+    @ManyToOne
+    private User borrower;
     @Column(name="amount")
     private int amount;
     @Column(name="repaymentindays")
     private int repaymentTermInDays;
     @Column(name="interestrate")
     private double interestRate;
-    @ManyToOne
-    private User borrower;
 
     public LoanApplication() {
     }
