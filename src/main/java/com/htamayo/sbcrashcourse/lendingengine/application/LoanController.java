@@ -33,6 +33,12 @@ public class LoanController {
         loanApplicationRepository.save(loanApplicationAdapter.transform(loanRequest));
     }
 
+    @GetMapping(value = "/loan/requests")
+    public List<LoanApplication> findAllLoanApplications(){
+        return loanApplicationRepository.findAll();
+
+    }
+
     @GetMapping(value="/users")
     public List<User> findUsers(){
         return (List<User>) userRepository.findAll();
