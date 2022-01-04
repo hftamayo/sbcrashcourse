@@ -1,21 +1,24 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.Duration;
 import java.util.Objects;
 
 @Entity
+@Table(name="loansapplication")
 public final class LoanApplication {
 
     @Id
+    @Column(name="id")
     private long id;
+    @Column(name="amount")
     private int amount;
+    @Column(name="repaymentindays")
+    private int repaymentTermInDays;
+    @Column(name="interestrate")
+    private double interestRate;
     @ManyToOne
     private User borrower;
-    private int repaymentTermInDays;
-    private double interestRate;
 
     public LoanApplication() {
     }
