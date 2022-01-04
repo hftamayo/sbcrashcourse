@@ -24,6 +24,22 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `fintech` /*!40100 DEFAULT CHARACTER SE
 USE `fintech`;
 
 --
+-- Table structure for table `loansapplication`
+--
+
+DROP TABLE IF EXISTS `loansapplication`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `loansapplication` (
+  `id` int NOT NULL,
+  `amount` int NOT NULL,
+  `repaymentindats` int NOT NULL,
+  `interestrate` double NOT NULL,
+  `userid` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `user`
 --
 
@@ -48,4 +64,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-01-02 18:25:16
+-- Dump completed on 2022-01-03 20:18:43
