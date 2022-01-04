@@ -14,16 +14,16 @@ public final class LoanApplication {
     private int amount;
     @ManyToOne
     private User borrower;
-    private Duration repaymentTerm;
+    private int repaymentTermInDays;
     private double interestRate;
 
     public LoanApplication() {
     }
 
-    public LoanApplication(int amount, User borrower, Duration repaymentTerm, double interestRate) {
+    public LoanApplication(int amount, User borrower, int repaymentTermInDays, double interestRate) {
         this.amount = amount;
         this.borrower = borrower;
-        this.repaymentTerm = repaymentTerm;
+        this.repaymentTermInDays = repaymentTermInDays;
         this.interestRate = interestRate;
     }
 
@@ -35,8 +35,8 @@ public final class LoanApplication {
         return borrower;
     }
 
-    public Duration getRepaymentTerm() {
-        return repaymentTerm;
+    public int getRepaymentTermInDays() {
+        return repaymentTermInDays;
     }
 
     public double getInterestRate() {
@@ -48,12 +48,14 @@ public final class LoanApplication {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LoanApplication that = (LoanApplication) o;
-        return amount == that.amount && Double.compare(that.interestRate, interestRate) == 0 && borrower.equals(that.borrower) && repaymentTerm.equals(that.repaymentTerm);
+        //verificar este return puesto que cuando cambiamos a int el metodo equals ya no era valido
+        //return amount == that.amount && Double.compare(that.interestRate, interestRate) == 0 && borrower.equals(that.borrower) && repaymentTerm.equals(that.repaymentTerm);
+        return amount == that.amount && Double.compare(that.interestRate, interestRate) == 0 && borrower.equals(that.borrower);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(amount, borrower, repaymentTerm, interestRate);
+        return Objects.hash(amount, borrower, repaymentTermInDays, interestRate);
     }
 
     @Override
@@ -61,7 +63,7 @@ public final class LoanApplication {
         return "LoanRequest{" +
                 "amount=" + amount +
                 ", borrower=" + borrower +
-                ", repaymentTerm=" + repaymentTerm +
+                ", repaymentTerm=" + repaymentTermInDays +
                 ", interestRate=" + interestRate +
                 '}';
     }
