@@ -1,17 +1,23 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
+@Table(name="loan")
 public class Loan {
 
     @Id
     @GeneratedValue
+    @Column(name="id")
     private long id;
+    @ManyToOne
     private User borrower;
+    @ManyToOne
     private User lender;
+    @Column(name="amount")
     private int amount;
+    @Column(name="interestrate")
     private double interestRate;
     private LocalDate dateLent;
     private LocalDate dateDue;
