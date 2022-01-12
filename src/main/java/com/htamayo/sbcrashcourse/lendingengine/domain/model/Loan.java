@@ -4,12 +4,12 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="loan")
+@Table(name="loansaccepted")
 public class Loan {
 
     @Id
-    @GeneratedValue
     @Column(name="id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @ManyToOne
     private User borrower;
@@ -19,7 +19,9 @@ public class Loan {
     private int amount;
     @Column(name="interestrate")
     private double interestRate;
+    @Column(name="datelent")
     private LocalDate dateLent;
+    @Column(name="datedue")
     private LocalDate dateDue;
 
     public Loan(){
