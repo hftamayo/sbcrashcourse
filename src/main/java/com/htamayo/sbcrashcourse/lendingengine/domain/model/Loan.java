@@ -38,4 +38,31 @@ public class Loan {
 
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public User getBorrower() {
+        return borrower;
+    }
+
+    public User getLender() {
+        return lender;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public double getInterestRate() {
+        return interestRate;
+    }
+
+    public LocalDate getDateLent() {
+        return dateLent;
+    }
+
+    public LocalDate getDateDue() {
+        return dateDue;
+    }
 }

@@ -1,6 +1,7 @@
 package com.htamayo.sbcrashcourse.lendingengine.application;
 
 import com.htamayo.sbcrashcourse.lendingengine.application.model.LoanRequest;
+import com.htamayo.sbcrashcourse.lendingengine.domain.model.Loan;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.LoanApplication;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.User;
 import com.htamayo.sbcrashcourse.lendingengine.domain.repository.LoanApplicationRepository;
@@ -49,5 +50,10 @@ public class LoanController {
                            @PathVariable final String loanApplicationId){
         loanService.acceptLoan(Long.parseLong(loanApplicationId), Long.parseLong(lenderId));
 
+    }
+
+    @GetMapping(value="/loans")
+    public List<Loan> getLoans(){
+        return loanService.getLoans();
     }
 }
