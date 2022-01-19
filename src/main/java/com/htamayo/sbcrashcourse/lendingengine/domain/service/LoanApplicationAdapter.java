@@ -2,6 +2,7 @@ package com.htamayo.sbcrashcourse.lendingengine.domain.service;
 
 import com.htamayo.sbcrashcourse.lendingengine.application.model.LoanRequest;
 import com.htamayo.sbcrashcourse.lendingengine.domain.exception.UserNotFoundException;
+import com.htamayo.sbcrashcourse.lendingengine.domain.model.AppUser;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.LoanApplication;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.User;
 import com.htamayo.sbcrashcourse.lendingengine.domain.repository.UserRepository;
@@ -20,14 +21,14 @@ public class LoanApplicationAdapter {
         this.userRepository = userRepository;
     }
 
-    public LoanApplication transform(LoanRequest req){
-        Optional<User> userOptional = userRepository.findById(req.getBorrowerId());
+    public LoanApplication transform(LoanRequest req, AppUser borrower){
+        Optional<User> userOptional = userRepository.findById(borrower.getId());
 
         if(userOptional.isPresent()){
             return new LoanApplication(req.getAmount(), userOptional.get(),
                     req.getDaysToRepay(), req.getInterestRate());
         } else{
-            throw new UserNotFoundException(req.getBorrowerId());
+            throw new UserNotFoundException(borrower.getId());
         }
     }
 }

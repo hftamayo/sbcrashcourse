@@ -1,6 +1,8 @@
 package com.htamayo.sbcrashcourse.lendingengine.application;
 
 import com.htamayo.sbcrashcourse.lendingengine.application.model.LoanRequest;
+import com.htamayo.sbcrashcourse.lendingengine.application.service.TokenValidationService;
+import com.htamayo.sbcrashcourse.lendingengine.domain.model.AppUser;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.Loan;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.LoanApplication;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.User;
@@ -10,7 +12,9 @@ import com.htamayo.sbcrashcourse.lendingengine.domain.service.LoanApplicationAda
 import com.htamayo.sbcrashcourse.lendingengine.domain.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpHeaders;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -20,35 +24,42 @@ public class LoanController {
     private final UserRepository userRepository;
     private final LoanApplicationAdapter loanApplicationAdapter;
     private final LoanService loanService;
+    private final TokenValidationService tokenValidationService;
 
     @Autowired
-    public LoanController(LoanApplicationRepository loanApplicationRepository, UserRepository userRepository, LoanApplicationAdapter loanApplicationAdapter, LoanService loanService) {
+    public LoanController(LoanApplicationRepository loanApplicationRepository, UserRepository userRepository, LoanApplicationAdapter loanApplicationAdapter, LoanService loanService, TokenValidationService tokenValidationService) {
         this.loanApplicationRepository = loanApplicationRepository;
         this.userRepository = userRepository;
         this.loanApplicationAdapter = loanApplicationAdapter;
         this.loanService = loanService;
+        this.tokenValidationService = tokenValidationService;
     }
 
     @PostMapping(value = "/loan/request", consumes={"application/json"})
-    public void RequestLoan(@RequestBody final LoanRequest loanRequest){
-        loanApplicationRepository.save(loanApplicationAdapter.transform(loanRequest));
+    public void RequestLoan(@RequestBody final LoanRequest loanRequest, HttpServletRequest request){
+        AppUser borrower = tokenValidationService.validateTokenAndGetUser(request.getHeader(HttpHeaders.AUTHORIZATION));
+        loanApplicationRepository.save(loanApplicationAdapter.transform(loanRequest, borrower));
     }
 
     @GetMapping(value = "/loan/requests")
-    public List<LoanApplication> findAllLoanApplications(){
+    public List<LoanApplication> findAllLoanApplications(HttpServletRequest request){
+        tokenValidationService.validateTokenAndGetUser(request.getHeader(HttpHeaders.AUTHORIZATION));
         return (List<LoanApplication>)loanApplicationRepository.findAll();
 
     }
 
     @GetMapping(value="/users")
-    public List<User> findUsers(){
+    public List<User> findUsers(HttpServletRequest request){
+        tokenValidationService.validateTokenAndGetUser(request.getHeader(HttpHeaders.AUTHORIZATION));
+
         return (List<User>) userRepository.findAll();
     }
 
-    @PostMapping(value="/loan/accept/{lenderId}/{loanApplicationId}")
-    public void acceptLoan(@PathVariable final String lenderId,
-                           @PathVariable final String loanApplicationId){
-        loanService.acceptLoan(Long.parseLong(loanApplicationId), Long.parseLong(lenderId));
+    @PostMapping(value="/loan/accept/{loanApplicationId}")
+    public void acceptLoan(@PathVariable final String loanApplicationId,
+                           HttpServletRequest request){
+        AppUser lender = tokenValidationService.validateTokenAndGetUser(request.getHeader(HttpHeaders.AUTHORIZATION));
+        loanService.acceptLoan(Long.parseLong(loanApplicationId), lender.getId());
 
     }
 
