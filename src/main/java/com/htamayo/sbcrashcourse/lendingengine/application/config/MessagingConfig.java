@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MessagingConfig {
     private static final String TOPIC = "userRegisteredTopic";
-    private static final String QUEUE_NAME = "user.registered";
+    private static final String QUEUE_NAME = "user.registered.lending";
 
     @Bean
     public Queue userRegisteredQueue(){
