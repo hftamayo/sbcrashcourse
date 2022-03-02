@@ -1,9 +1,6 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
@@ -20,16 +17,19 @@ public final class User {
     private int age;
     @Column(name="occupation")
     private String occupation;
+    @OneToOne
+    private Balance balance;
 
     public User() {
     }
 
-    public User(long id, String firstName, String lastName, int age, String occupation) {
+    public User(long id, String firstName, String lastName, int age, String occupation, Balance balance) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
         this.occupation = occupation;
+        this.balance = balance;
     }
 
     public String getFirstName() {
@@ -46,6 +46,14 @@ public final class User {
 
     public String getOccupation() {
         return occupation;
+    }
+
+    public void topUp(final Money money){
+        balance.topUp(money);
+    }
+
+    public void withDraw(final Money money){
+        balance.withdraw(money);
     }
 
     @Override

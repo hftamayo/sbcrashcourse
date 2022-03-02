@@ -1,5 +1,6 @@
 package com.htamayo.sbcrashcourse;
 
+import com.htamayo.sbcrashcourse.lendingengine.domain.model.Balance;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.User;
 import com.htamayo.sbcrashcourse.lendingengine.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class SbcrashcourseApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		userRepository.save(new User(1, "John", "B", 27, "Software Developer"));
-		userRepository.save(new User(2, "Peter", "C", 21, "Pilot"));
-		userRepository.save(new User(3, "Henry", "E", 21, "Unemployed"));
+		userRepository.save(new User(1, "John", "B", 27, "Software Developer", new Balance()));
+		userRepository.save(new User(2, "Peter", "C", 21, "Pilot", new Balance()));
+		userRepository.save(new User(3, "Henry", "E", 21, "Unemployed", new Balance()));
 	}
 }

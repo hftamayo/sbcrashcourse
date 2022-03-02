@@ -16,4 +16,13 @@ public class Balance {
             moneyMap.put(money.getCurrency(), moneyMap.get(money.getCurrency()).increment(money));
         }
     }
+
+    public void withdraw(final Money money){
+        final Money moneyInBalance = moneyMap.get(money.getCurrency());
+        if(moneyInBalance == null){
+            throw new IllegalStateException();
+        } else {
+            moneyMap.put(money.getCurrency(), moneyMap.get(money.getCurrency()).decrement(money));
+        }
+    }
 }
