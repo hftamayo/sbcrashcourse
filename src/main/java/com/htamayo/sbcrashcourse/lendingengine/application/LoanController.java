@@ -48,11 +48,11 @@ public class LoanController {
 
     }
 
-    @GetMapping(value="/users")
-    public List<User> findUsers(HttpServletRequest request){
-        tokenValidationService.validateTokenAndGetUser(request.getHeader(HttpHeaders.AUTHORIZATION));
+    @GetMapping(value = "/loan/borrowed")
+    public List<Loan> findBorrowedLoans(@RequestHeader String authorizarion){
+        AppUser borrower = tokenValidationService.validateTokenAndGetUser(authorizarion);
+        return
 
-        return (List<User>) userRepository.findAll();
     }
 
     @PostMapping(value="/loan/accept/{loanApplicationId}")

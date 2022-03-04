@@ -2,15 +2,14 @@ package com.htamayo.sbcrashcourse.lendingengine.domain.service;
 
 import com.htamayo.sbcrashcourse.lendingengine.domain.exception.LoanApplicationNotFoundException;
 import com.htamayo.sbcrashcourse.lendingengine.domain.exception.UserNotFoundException;
-import com.htamayo.sbcrashcourse.lendingengine.domain.model.Loan;
-import com.htamayo.sbcrashcourse.lendingengine.domain.model.LoanApplication;
-import com.htamayo.sbcrashcourse.lendingengine.domain.model.User;
+import com.htamayo.sbcrashcourse.lendingengine.domain.model.*;
 import com.htamayo.sbcrashcourse.lendingengine.domain.repository.LoanApplicationRepository;
 import com.htamayo.sbcrashcourse.lendingengine.domain.repository.LoanRepository;
 import com.htamayo.sbcrashcourse.lendingengine.domain.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Component
@@ -27,13 +26,29 @@ public class LoanService {
         this.loanRepository = loanRepository;
     }
 
-    public void acceptLoan(final long loanApplicationId, final long lenderId){
-        User lender = userRepository.findById(lenderId).orElseThrow(() -> new UserNotFoundException(lenderId
-        ));
-        LoanApplication loanApplication = loanApplicationRepository.findById(loanApplicationId)
-                .orElseThrow(() -> new LoanApplicationNotFoundException(loanApplicationId));
+    @Transactional
+    public void acceptLoan(final long loanApplicationId, final long lenderUserId){
+        User lender = findUser(lenderUserId);
+        LoanApplication loanApplication = findLoanApplication(loanApplicationId);
+        User borrower = loanApplication.getBorrower();
+        Money money = new Money(loanApplication.getAmount(), Currency.USD);
+        lender.withDraw(money);
+        borrower.topUp(money);
         loanRepository.save(new Loan(lender, loanApplication));
     }
+
+    public List<>
+
+    private LoanApplication findLoanApplication(long loanApplicationId){
+        return loanApplicationRepository.findById(loanApplicationId)
+                .orElseThrow(() -> new LoanApplicationNotFoundException(loanApplicationId));
+    }
+
+    private User findUser(long lenderUserId){
+        return userRepository.findById(lenderUserId).orElseThrow(() -> new UserNotFoundException(lenderUserId));
+    }
+
+
 
     public List<Loan> getLoans(){
         return loanRepository.findAll();

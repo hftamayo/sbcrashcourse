@@ -25,12 +25,12 @@ public class BalanceService {
     }
 
     @Transactional
-    public void withdrawFromBalance(final Money money, long authToken){
+    public void withdrawFromBalance(final Money money, String authToken){
         User user = findUser(authToken);
         user.withDraw(money);
     }
 
-    private User findUser(long authToken) {
+    private User findUser(String authToken) {
         return userRepository.findById(authToken)
                 .orElseThrow(() -> new UserNotFoundException(authToken));
     }
