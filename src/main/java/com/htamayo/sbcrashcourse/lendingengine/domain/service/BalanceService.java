@@ -21,17 +21,16 @@ public class BalanceService {
     @Transactional
     public void topUpBalance(final Money money, String authToken){
         User user = findUser(authToken);
-
         user.topUp(money);
     }
 
     @Transactional
-    public void withdrawFromBalance(final Money money, String authToken){
+    public void withdrawFromBalance(final Money money, long authToken){
         User user = findUser(authToken);
         user.withDraw(money);
     }
 
-    private User findUser(String authToken) {
+    private User findUser(long authToken) {
         return userRepository.findById(authToken)
                 .orElseThrow(() -> new UserNotFoundException(authToken));
     }

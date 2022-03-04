@@ -1,12 +1,19 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
 public class Balance {
 
+    @Id
+    @GeneratedValue
+    private long id;
+
+    @ElementCollection
+    @MapKeyClass(Currency.class)
+    @OneToMany(targetEntity = Money.class, cascade = CascadeType.ALL)
     private Map<Currency, Money> moneyMap = new HashMap<>();
 
     public void topUp(final Money money){
@@ -24,5 +31,9 @@ public class Balance {
         } else {
             moneyMap.put(money.getCurrency(), moneyMap.get(money.getCurrency()).decrement(money));
         }
+    }
+
+    public Map<Currency, Money> getMoneyMap() {
+        return moneyMap;
     }
 }

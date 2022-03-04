@@ -1,10 +1,23 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.util.Objects;
 
+@Entity
 public final class Money {
-    private final Currency currency;
-    private final double amount;
+
+    @Id
+    @GeneratedValue
+    private long id;
+
+    private Currency currency;
+    private double amount;
+
+    public Money(){
+
+    }
 
     public Money(double amount, Currency currency) {
         this.currency = currency;

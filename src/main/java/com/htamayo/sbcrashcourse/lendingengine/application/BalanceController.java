@@ -23,6 +23,6 @@ public class BalanceController {
 
     @PostMapping("/withdraw")
     public void withdraw(final @RequestBody Money money, @RequestHeader String authorization){
-
+        balanceService.withdrawFromBalance(money, authorization);
     }
 }

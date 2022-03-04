@@ -17,7 +17,7 @@ public final class User {
     private int age;
     @Column(name="occupation")
     private String occupation;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Balance balance;
 
     public User() {
@@ -54,6 +54,10 @@ public final class User {
 
     public void withDraw(final Money money){
         balance.withdraw(money);
+    }
+
+    public Balance getBalance() {
+        return balance;
     }
 
     @Override
