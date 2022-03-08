@@ -21,15 +21,13 @@ import java.util.List;
 public class LoanController {
 
     private final LoanApplicationRepository loanApplicationRepository;
-    private final UserRepository userRepository;
     private final LoanApplicationAdapter loanApplicationAdapter;
     private final LoanService loanService;
     private final TokenValidationService tokenValidationService;
 
     @Autowired
-    public LoanController(LoanApplicationRepository loanApplicationRepository, UserRepository userRepository, LoanApplicationAdapter loanApplicationAdapter, LoanService loanService, TokenValidationService tokenValidationService) {
+    public LoanController(LoanApplicationRepository loanApplicationRepository, LoanApplicationAdapter loanApplicationAdapter, LoanService loanService, TokenValidationService tokenValidationService) {
         this.loanApplicationRepository = loanApplicationRepository;
-        this.userRepository = userRepository;
         this.loanApplicationAdapter = loanApplicationAdapter;
         this.loanService = loanService;
         this.tokenValidationService = tokenValidationService;
@@ -50,10 +48,18 @@ public class LoanController {
 
     @GetMapping(value = "/loan/borrowed")
     public List<Loan> findBorrowedLoans(@RequestHeader String authorizarion){
-        AppUser borrower = tokenValidationService.validateTokenAndGetUser(authorizarion);
-        return
-
+        User borrower = tokenValidationService.validateTokenAndGetUser(authorizarion);
+        return loanService.findAllBorrowedLoans(borrower);
     }
+
+    @GetMapping(value="/loan/lent")
+    public List<Loan> findLentLoans(@RequestHeader String authorizarion){
+        User lender = tokenValidationService.validateTokenAndGetUser(authorizarion);
+        return loanService.findAllBorrowedLoans(lender);
+    }
+
+    @PostMapping(value="/loan/repay")
+    public void re
 
     @PostMapping(value="/loan/accept/{loanApplicationId}")
     public void acceptLoan(@PathVariable final String loanApplicationId,
