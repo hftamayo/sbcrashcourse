@@ -24,6 +24,10 @@ public final class Money {
         this.amount = amount;
     }
 
+    public Money times(double multiplier){
+        return new Money(amount * multiplier, currency);
+    }
+
     public Money increment(final Money money){
         if(currency != money.getCurrency()){
             throw new IllegalArgumentException();

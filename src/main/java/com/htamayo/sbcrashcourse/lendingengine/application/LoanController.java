@@ -1,5 +1,6 @@
 package com.htamayo.sbcrashcourse.lendingengine.application;
 
+import com.htamayo.sbcrashcourse.lendingengine.application.model.LoanRepaymentRequest;
 import com.htamayo.sbcrashcourse.lendingengine.application.model.LoanRequest;
 import com.htamayo.sbcrashcourse.lendingengine.application.service.TokenValidationService;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.AppUser;
@@ -59,7 +60,12 @@ public class LoanController {
     }
 
     @PostMapping(value="/loan/repay")
-    public void re
+    public void repayLoan(@RequestBody LoanRepaymentRequest request,
+                          @RequestHeader String authorization){
+        User borrower = tokenValidationService.validateTokenAndGetUser(authorization);
+
+
+    }
 
     @PostMapping(value="/loan/accept/{loanApplicationId}")
     public void acceptLoan(@PathVariable final String loanApplicationId,

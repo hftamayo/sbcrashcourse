@@ -16,13 +16,17 @@ public class Loan {
     @ManyToOne
     private User lender;
     @Column(name="amount")
-    private int amount;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Money loanAmount;
     @Column(name="interestrate")
     private double interestRate;
     @Column(name="datelent")
     private LocalDate dateLent;
     @Column(name="datedue")
     private LocalDate dateDue;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Money amountRepayed;
+
 
     public Loan(){
 
@@ -31,10 +35,14 @@ public class Loan {
     public Loan(User lender, LoanApplication loanApplication){
         this.borrower = loanApplication.getBorrower();
         this.lender = lender;
-        this.amount = loanApplication.getAmount();
+        this.loanAmount = loanApplication.getAmount();
         this.interestRate = loanApplication.getInterestRate();
         this.dateLent = LocalDate.now();
         this.dateDue = LocalDate.now().plusDays(loanApplication.getRepaymentTermInDays());
+    }
+
+    public Money getAmountOwned(){
+        return loanAmount.times(1 + interestRate/100).decrement(amountRepayed);
 
     }
 
@@ -50,19 +58,8 @@ public class Loan {
         return lender;
     }
 
-    public int getAmount() {
-        return amount;
+    public Money getAmountRepayed() {
+        return amountRepayed;
     }
 
-    public double getInterestRate() {
-        return interestRate;
-    }
-
-    public LocalDate getDateLent() {
-        return dateLent;
-    }
-
-    public LocalDate getDateDue() {
-        return dateDue;
-    }
 }

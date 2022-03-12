@@ -1,6 +1,7 @@
 package com.htamayo.sbcrashcourse.lendingengine.domain.service;
 
 import com.htamayo.sbcrashcourse.lendingengine.domain.exception.LoanApplicationNotFoundException;
+import com.htamayo.sbcrashcourse.lendingengine.domain.exception.LoanNotFoundException;
 import com.htamayo.sbcrashcourse.lendingengine.domain.exception.UserNotFoundException;
 import com.htamayo.sbcrashcourse.lendingengine.domain.model.*;
 import com.htamayo.sbcrashcourse.lendingengine.domain.repository.LoanApplicationRepository;
@@ -24,6 +25,17 @@ public class LoanService {
         this.loanApplicationRepository = loanApplicationRepository;
         this.userRepository = userRepository;
         this.loanRepository = loanRepository;
+    }
+
+    @Transactional
+    public void repayLoan(final Money amountToRepay,
+                          final long loanId,
+                          final User borrower){
+        Loan loan = loanRepository.findOneByIdAndBorrower(loanId, borrower)
+                .orElseThrow(LoanNotFoundException::new);
+        Money actualPaidAmount = amountToRepay.getAmount() >
+
+
     }
 
     @Transactional
